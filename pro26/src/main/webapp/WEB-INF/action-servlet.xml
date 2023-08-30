@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+       
+<!-- 이것은 annotion으로 안만듬 (만들 수 있지만 X) 이유는 몰라도 됨-->
+<bean id ="viewResolver" 
+      class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name = "viewClass"
+                value = "org.springframework.web.servlet.view.JstlView" />
+      <property name = "prefix"
+                value = "/WEB-INF/views/member/" />  
+      <property name = "suffix" value =".jsp" />
+</bean>
+
+
+
+<!-- 
+어노테이션으로 인해 xml의 bean 객체 다 없앰
+<bean id = "MemberController" 
+      class = "com.spring.member.controller.MemberControllerImpl">
+      <property name = "methodNameResolver">
+        <ref local = "memberMethodResolver" />
+      </property>
+      <property name = "memberService" ref ="memberService" />
+</bean>   
+
+<bean id = "memberMethodResolver"
+      class = "org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+      <property name = "mappings">
+        <props>
+          <prop key = "/member/listMembers.do">listMembers</prop>
+          <prop key = "/member/addMember.do">addMember</prop>
+          <prop key = "/member/removeMember.do">removeMember</prop>
+          <prop key ="/member/memberForm.do">form</prop>
+        </props>
+      </property>
+</bean>     
+<bean id = "memberUrlMapping"
+      class ="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+      <property name ="mappings">
+        <props>
+          <prop key ="/member/*.do">MemberController</prop>
+        </props>
+      </property>
+</bean>    -->
+
+
+<bean class = "org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+<bean class = "org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+<context:component-scan base-package="com.spring" />
+
+<!-- 나 어노테이션 사용할래요!
+2개의 어노테이션
+1. springframework servlet mvc defaulannotationHandlerMapping 
+  (@controller, @service 등등)에서 지원되는 어노테이션
+2. springframework web servlet mvc annotationMethodHandlerAdapter 
+  (맵핑) 에서 지원되는 어노테이션 ->Controller에서 @RequestMapping태그를 넣어주며 사용
+  method = RequestMethod.GET 두개 다 제공해줌
+
+3. <context:component-scan base-package="com.spring" />
+    -> com.spring위치에서 딱 멈추고 아래서부터 살펴보아라 
+        (com.spring.member.dao - > member.dao만 보아라) -->
+      
+</beans>
