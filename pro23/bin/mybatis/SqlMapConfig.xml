@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <typeAliases>
+    <typeAlias type ="con.spring.ex01.MemberVO" alias="memberVO" />
+  </typeAliases>
+  <enviroments default ="development">
+    <enviroment id = "development">
+      <transactionManager type ="JDBC" />
+      <dataSource type ="POOLED">
+        <property name ="driver" value="com.mysql.cj.jdbc.Driver" />
+        <property name ="url" value= "jdbc:mysql://localhost:3306/servletex" />
+        <property name ="username" value= "root" />
+        <property name ="password" value= "1234" />
+      </dataSource>
+    </enviroment>
+  </enviroments>
+  
+  <mappers>
+    <mapper resource="mybatis/mappers/member.xml" />
+  </mappers>
+</configuration>
