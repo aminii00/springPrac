@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+  <bean id = "calcTarget" class ="com.spring.ex01.Calculator" />  
+  <!-- calcTarget이 이름인 Calculator인 객체 생성  -->
+  <bean id = "logAdvice" class ="com.spring.ex01.LoggingAdvice" />
+  
+  <bean id = "proxyCal" class ="org.springframework.aop.framework.ProxyFactoryBean">
+  <!-- proxyCal이 이름인 객체 생성 , ProxyFactoryBean클래스를 이용해 타깃에 어드바이스(로그인같은 보조기능)를 설정 -->
+    <property name ="target" ref="calcTarget" />
+    <!-- property는 필드로, set을 이용한 의존성 주입/ target이라는 필드에는 CalcTarget을 넣겠다. 
+         즉, target은 Calculator형이다. -->
+    <property name ="interceptorNames">
+       <list>
+         <value>logAdvice</value>
+         <!--  interceptorNames는 LoggingAdvice형 리스트형 
+               전, 후로 나뉘기 때문에 리스트일수밖에 없음 Exception! 때문에 -->
+       </list>
+    </property>
+  </bean>
+</beans>
